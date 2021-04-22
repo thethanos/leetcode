@@ -5,7 +5,7 @@
 
 int count_primes(const int& n)
 {
-	if (!n || n < 2) return 0;
+	if (n < 2) return 0;
 
 	std::vector<bool> numbers(n, true);
 	for (int i(2); i * i < n; ++i)
