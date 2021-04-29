@@ -4,25 +4,16 @@
 
 using std::vector;
 
-int dfs(int i, int j, vector<int>& memo);
-
-int count_bst(int n)
+//O(n * n) 
+int count_unique_bst(int n)
 {
-	vector<int> memo(n);
-	return dfs(1, n, memo);
+	vector<int> memo(n + 1);
+	memo[0] = 1;
+	memo[1] = 1;
+
+	for (int i(2); i <= n; ++i)
+		for (int j(0); j < n; ++j)
+			memo[i] += memo[j] * memo[i - 1 - j];
+
+	return memo[n];
 }
-
-int dfs(int i, int j, vector<int>& memo)
-{
-	if (i > j) return 1;
-	if (memo[j-i]) return memo[j-i];
-
-	int res(0);
-	for (int k = i; k <= j; ++k)
-		res += dfs(i, k-1, memo) * dfs(k + 1, j, memo);
-
-	memo[j-i] = res;
-	return res;
-}
-
-//F(i, n) = G(i - 1) * G(n - i)
